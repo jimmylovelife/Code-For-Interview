@@ -16,7 +16,6 @@ typedef struct {
 } Stack;
 
 void init(Stack *s) {
-     s = (Stack *) calloc(sizeof (Stack), sizeof (char));
      s->stk = (char *) calloc(CAP, sizeof (char));
      s->len = 0;
      s->cap = CAP;
@@ -83,8 +82,8 @@ bool isPalindrome1(char *str, int len) {
  
 int main(void) {
     char *str = "abcddcba";
-    /*
-     Stack *s;
+    
+     Stack *s = (Stack *) calloc(sizeof (Stack), sizeof (char));
      init(s);
      
      if (isPalindrome(str, s)) {
@@ -92,9 +91,13 @@ int main(void) {
      } else {
         printf("It is not a palindrome\n");
      }
-     */
+     
+     /*
      if (isPalindrome1(str, strlen(str)))
         printf("It is palindrome\n");
+     */
+     system("pause");
      return 0;
+     
 }
 
