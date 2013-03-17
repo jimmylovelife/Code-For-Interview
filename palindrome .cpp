@@ -79,10 +79,18 @@ bool isPalindrome1(char *str, int len) {
         return false;
      }
 }
+
+bool isPalindrome2(char *str, int len) {
+     for(int i=0; i<len/2; i++) {
+             if(str[i] != str[len-i-1])
+                       return false;
+     }
+     return true;
+}
  
 int main(void) {
-    char *str = "abcddcba";
-    
+    char *str = "abcdvdcba";
+    /*
      Stack *s = (Stack *) calloc(sizeof (Stack), sizeof (char));
      init(s);
      
@@ -91,11 +99,13 @@ int main(void) {
      } else {
         printf("It is not a palindrome\n");
      }
-     
+     */
      /*
      if (isPalindrome1(str, strlen(str)))
         printf("It is palindrome\n");
      */
+     if (isPalindrome2(str, strlen(str)))
+        printf("It is palindrome\n");
      system("pause");
      return 0;
      
