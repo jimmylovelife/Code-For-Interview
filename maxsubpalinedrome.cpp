@@ -52,8 +52,26 @@ char pop(Stack *s) {
 bool maxSubPalindrome(char *str, int len) {
      int max;
      int pop = 0;
-     for(int i=0; i<len; i++) {
-             
+     int index = 0;
+     int start = 0;
+     int max_start = 0;
+     //char *buff = (char *) calloc(len+1, sizeof(char));
+     for(int i=1; i<len; i++) {
+           if( (pop == 0)&& (index >= pop) && ((str[i] == str[index])||(str[i] == str[index-pop]))) {
+               index++;
+               pop++;
+           } else if( index >= pop && str[i] == str[index-pop]) {
+               pop++;
+           } else {
+               if (max < (i-start)) {
+                    max = i - start;
+                    max_start = start;
+                    
+               } 
+               start = i;
+               pop = 0;
+               index++;
+           }
      } 
 } 
 
