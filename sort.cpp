@@ -115,6 +115,8 @@ void quicksort(Tp *array, int start, int end)
 
 
 }
+
+//TODO Other sort algorithm
 int main()
 {
     //int array[] = {1,3,2,0};

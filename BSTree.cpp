@@ -50,7 +50,7 @@ BSTree* createBSTree() {
      }
      return root;
 }
-
+//ÖÐÐò±éÀú 
 void inorder(BSTree *bTree) {
      if (bTree->left != NULL) {
          inorder(bTree->left);
@@ -61,7 +61,7 @@ void inorder(BSTree *bTree) {
      }
      
 }
-
+//TODO add other algorithm
 int main() {
     BSTree *root = createBSTree();
     inorder(root);
