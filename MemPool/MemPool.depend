@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1366096880 source:c:\cygwin\home\ysun49\code-for-interview\mempool\main.cpp
+	<stdlib.h>
+	<iostream>
+	<inttypes.h>
+	<string.h>
+	<assert.h>
+
+1366008855 source:c:\cygwin\home\ysun49\code-for-interview\mempool\memorypool.cpp
+	"memorypool.h"
+	"constant.h"
+
+1366008885 c:\cygwin\home\ysun49\code-for-interview\mempool\memorypool.h
+	<stdlib.h>
+
+1363778190 c:\cygwin\home\ysun49\code-for-interview\mempool\constant.h
+
