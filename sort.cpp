@@ -3,6 +3,7 @@ implement sort algorithm
 */
 #include <iostream>
 #include <malloc.h>
+
 using namespace std;
 //dumparray
 template<typename Tp>
@@ -206,9 +207,72 @@ void heapSort(Tp *array, int len)
     {
         swap(&array[i], &array[0]);
         bigHeap(array, 0, i);
+    }
 }
+
+//bucket sort
+template <typename Tp>
+struct BucketNode
+{
+    Tp value;
+    struct BucketNode *next;
+};
+template <typename Tp>
+void addToBucket(BucketNode<Tp> *bucket,Tp item)
+{
+    BucketNode<Tp> *pCur=NULL, *pPre=NULL;
+    pCur = bucket->next;
+    pPre = bucket;
+    while(pCur)
+    {
+        if(pCur->value <= item)
+        {
+            pPre = pCur;
+            pCur = pCur->next;
+        } else
+        {
+            break;
+        }
+    }
+    BucketNode<Tp> *node = (BucketNode<Tp> *) malloc(sizeof(BucketNode<Tp>));
+    node->value = item;
+    node->next = pPre->next;
+    pPre->next = node;
 }
-//TODO Other sort algorithm
+template<typename Tp>
+void bucketSort(Tp *array, int len)
+{
+    //tricky here
+    int bucket_num = 3;
+    int min = 0, max = 9;
+    int ind = (max-min+1)/bucket_num;
+    BucketNode<Tp> *bucket[bucket_num];
+    for(int i=0; i<bucket_num; i++)
+    {
+        bucket[i] = (BucketNode<Tp> *)malloc(sizeof(BucketNode<Tp>));
+        bucket[i]->value = i;
+        bucket[i]->next = NULL;
+    }
+    int index;
+    for(int i=0; i<len; i++)
+    {
+        index = (array[i]-min+1)/ind;
+        if(index >= bucket_num)
+            index = bucket_num-1;
+        addToBucket((bucket[index]), array[i]);
+    }
+    BucketNode<Tp> *ptr = NULL;
+    for(int i=0; i<bucket_num; i++)
+    {
+        ptr = bucket[i]->next;
+        while(ptr)
+        {
+            cout<<ptr->value<<",";
+            ptr = ptr->next;
+        }
+    }
+}
+
 int main()
 {
     //int array[] = {1,3,2,0};
@@ -218,7 +282,8 @@ int main()
     //insert(array, 9);
     //quicksort(array, 0, 8);
     //mergesort(array, 9);
-    heapSort(array, 9);
+    //heapSort(array, 9);
     dump(array, 9);
+    bucketSort(array, 9);
     return 0;
 }
