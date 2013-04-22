@@ -3,6 +3,8 @@
 **/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 typedef struct Tree{
         int data;
@@ -91,33 +93,45 @@ int depth_of_tree(BSTree *bTree) {
 }
 
 static BSTree *array[100];
+static int depth;
+void display(BSTree *item, int layer, bool flag) {
+	//printf("print item->data:%d\n", item->data->data);
+	for (int i=0; i<depth-layer; i++)
+		printf(" ");
+	if (item == NULL)
+		printf(" ");
+	else 
+		printf("%d", item->data);
+	if(flag)
+		printf(" ");
+}
 //怎样从顶部开始逐层打印二叉树结点数据
 void printByLayer(BSTree *bTree) {
-    int depth = depth_of_tree(bTree);
+    depth = depth_of_tree(bTree);
     printf("depth is %d\n", depth);
-    int id = 0;
     BSTree *ptr = bTree;
-    int index = 0;
-    while(ptr != NULL) {
-        if(ptr->left != NULL)
-            array[id++] = ptr->left;
-        if(ptr->right != NULL)
-            array[id++] = ptr->right;
-        printf("%d,", ptr->data);
-        ptr = array[index++];
-    }
-    //TODO 更加漂亮的打印
-    /*
+	array[0] = ptr;
+	int id = 0, last=0;
     for(int i=1; i<=depth; i++) {
-
-    }
-    */
+		int k = pow(2, i-1);
+		bool left = true;//打印标记
+		while(k>0) {
+			display(array[id], i, left);
+			if(array[id] == NULL) {
+				array[++last] = NULL;
+				array[++last] = NULL;
+			} else {
+				//printf("Enqueue %d,%d\n", item->data->left->data, item->data->right->data);
+				array[++last] = array[id]->left;
+				array[++last] = array[id]->right;
+			}
+			k--;
+			id++;
+			left = !left;
+    	}
+		printf("\n");
+	}
 }
-/*
-int abs(int a, int b) {
-	
-}
-*/
 //是否是平衡二叉树
 bool isBalanceTree(BSTree *bTree) {
 	if(bTree == NULL) 
