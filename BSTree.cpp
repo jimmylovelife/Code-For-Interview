@@ -106,11 +106,23 @@ void printByLayer(BSTree *bTree) {
         printf("%d,", ptr->data);
         ptr = array[index++];
     }
+    //TODO 更加漂亮的打印
     /*
     for(int i=1; i<=depth; i++) {
 
     }
     */
+}
+/*
+int abs(int a, int b) {
+	
+}
+*/
+//是否是平衡二叉树
+bool isBalanceTree(BSTree *bTree) {
+	if(bTree == NULL) 
+		return true;
+	return (abs(depth_of_tree(bTree->left) - depth_of_tree(bTree->right)) <= 1);
 }
 
 //TODO add other algorithm
@@ -124,5 +136,8 @@ int main() {
     postorder(root);
     printf("\n逐层遍历：");
     printByLayer(root);
-    //system("pause");
+	if(isBalanceTree(root))
+		printf("is balance tree\n");
+	else 
+		printf("not a balance tree\n");
 }
