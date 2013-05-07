@@ -139,6 +139,28 @@ bool isBalanceTree(BSTree *bTree) {
 	return (abs(depth_of_tree(bTree->left) - depth_of_tree(bTree->right)) <= 1);
 }
 
+int numOfChild(BSTree *tTree, BSTree* ch1, BSTree *ch2) {
+	if (tTree == NULL)
+		return 0;
+	if(tTree == ch1 || tTree == ch2)
+		return 1;
+	int left = 0, right = 0;
+	left = numOfChild(tTree->left, ch1, ch2);
+	right = numOfChild(tTree->right, ch1, ch2);
+	return left + right;
+}
+
+//二叉树上任意两个节点的最近共同父结点
+BSTree *commonFather(BSTree *tTree, BSTree* ch1, BSTree* ch2) {
+	int left = 0, right = 0;
+	left = numOfChild(tTree->left, ch1, ch2);
+	right = numOfChild(tTree->right, ch1, ch2);
+
+	if (left == 2) return commonFather(tTree->left, ch1, ch2);
+	if (right == 2) return commonFather(tTree->right, ch1, ch2);
+	if (left == 1 && right == 1) return tTree;
+	return NULL;
+}	
 //TODO add other algorithm
 int main() {
     BSTree *root = createBSTree();
