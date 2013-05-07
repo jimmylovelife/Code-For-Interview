@@ -60,6 +60,58 @@ void inorder(BSTree *bTree) {
     printf("%d,", bTree->data);
     inorder(bTree->right);
 }
+
+struct LiNode{
+	int access;
+	BSTree *item;
+	struct LiNode* next;
+};
+
+struct LiNode *header = NULL;
+
+void deal() {
+	BSTree *ptr = header->item;
+	header->access = 1;
+	if (ptr->right != NULL) {
+		struct LiNode *right= (LiNode *) malloc(sizeof(LiNode));
+		right->access = 0;
+		right->next = header->next;
+		header->next = right;
+		right->item = ptr->right;
+	}
+	if (ptr->left != NULL) {
+		struct LiNode *left = (LiNode *) malloc(sizeof(LiNode));
+		left->access = 0; 
+		left->item = ptr->left;
+		left->next = header;
+		header = left;
+	}
+}
+//非递归中序
+void inorder_(BSTree *root) {
+	if (root == NULL)
+		return;
+	BSTree *ptr = root;
+	bool first = true;
+	while (first || header != NULL) {
+		first = false;
+		if(header == NULL) {
+			struct LiNode *item = (LiNode *) malloc(sizeof(LiNode));
+			item->access = 1;
+			item->item = ptr;
+			item->next = NULL;
+			header = item;
+			deal();
+		} else {
+			if (++(header->access) < 2) {
+				deal();
+			} else {
+				printf("%d,", header->item->data);
+				header = header->next;
+			}
+		}
+	}
+}
 //先序遍历递归
 void preorder(BSTree *bTree) {
     if(bTree == NULL)
@@ -68,7 +120,24 @@ void preorder(BSTree *bTree) {
     preorder((bTree->left));
     preorder((bTree->right));
 }
-
+BSTree *array1[1000];
+//非递归先序
+void preorder_(BSTree *root) {
+	if (root == NULL)
+		return;
+	BSTree *ptr = root;
+	int bottom = 0, top = 0;
+	bool first = true;
+	while (top < bottom || first) {
+		first = false;
+		if(ptr != NULL) {
+			printf("%d,", ptr->data);
+			array1[bottom++] = ptr->left;
+			array1[bottom++] = ptr->right;
+		}
+		ptr = array1[top++];
+	}
+}
 //后序遍历
 void postorder(BSTree *bTree) {
     if(bTree == NULL)
@@ -78,6 +147,52 @@ void postorder(BSTree *bTree) {
     printf("%d,", bTree->data);
 
 }
+void deal_post() {
+	BSTree *ptr = header->item;
+	header->access = 1;
+	if (ptr->right != NULL) {
+		struct LiNode *right= (LiNode *) malloc(sizeof(LiNode));
+		right->access = 0;
+		right->next = header;
+		right->item = ptr->right;
+		header = right;
+	}
+	if (ptr->left != NULL) {
+		struct LiNode *left = (LiNode *) malloc(sizeof(LiNode));
+		left->access = 0; 
+		left->item = ptr->left;
+		left->next = header;
+		header = left;
+	}
+}
+//非递归后序
+void postorder_(BSTree *bTree) {
+	if(bTree == NULL)
+		return;
+	BSTree *ptr = root;
+	bool first = true;
+	while (first || header != NULL) {
+		first = false;
+		if(header == NULL) {
+			struct LiNode *item = (LiNode *) malloc(sizeof(LiNode));
+			item->access = 1;
+			item->item = ptr;
+			item->next = NULL;
+			header = item;
+			deal_post();
+		} else {
+			if (++(header->access) < 2) {
+				deal_post();
+			} else {
+				printf("%d,", header->item->data);
+				header = header->next;
+			}
+		}
+	}
+}
+
+
+
 
 int max(int a, int b) {
     if (a >= b)
