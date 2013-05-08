@@ -276,6 +276,17 @@ BSTree *commonFather(BSTree *tTree, BSTree* ch1, BSTree* ch2) {
 	if (left == 1 && right == 1) return tTree;
 	return NULL;
 }	
+
+//Çó¶þ²æÊ÷µÄ¾µÏñ
+void treeImage(BSTree *tree) {
+	if (tree == NULL)
+		return;
+	BSTree *tmp = tree->left;
+	tree->left = tree->right;
+	tree->right = tmp;
+	treeImage(tree->left);
+	treeImage(tree->right);
+}
 //TODO add other algorithm
 int main() {
     BSTree *root = createBSTree();
