@@ -35,8 +35,10 @@ Node * rm_node (Node *head, rm_func rm) {
  * Linus给出的解法
  * 用二级指针
  * 巧妙解决
+ * 个人感觉还是用到了一个多余指针，逻辑稍微简化
+ * 这是很细节的改进
+ * 不赞同， 持保留意见
  */
-
 void rm_node(Node **head, rm_func rm) {
 	Node **curr = head;
 	while (*curr) {
